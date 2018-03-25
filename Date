@@ -1,3 +1,10 @@
+/*
+有几个bug，不知道怎么改
+C:\Users\17794\AppData\Local\Temp\ccqM0FJF.o	Date.cpp:(.text+0x67): undefined reference to `Date::Date(int, int, int)'
+C:\Users\17794\AppData\Local\Temp\ccqM0FJF.o	Date.cpp:(.text+0x84): undefined reference to `Date::Date(int, int, int)'
+E:\程序设计\C++\collect2.exe	[Error] ld returned 1 exit status
+*/
+
 #include<iostream>
 
 using namespace std;
