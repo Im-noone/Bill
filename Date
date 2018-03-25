@@ -1,8 +1,5 @@
 /*
-有几个bug，不知道怎么改
-C:\Users\17794\AppData\Local\Temp\ccqM0FJF.o	Date.cpp:(.text+0x67): undefined reference to `Date::Date(int, int, int)'
-C:\Users\17794\AppData\Local\Temp\ccqM0FJF.o	Date.cpp:(.text+0x84): undefined reference to `Date::Date(int, int, int)'
-E:\程序设计\C++\collect2.exe	[Error] ld returned 1 exit status
+在杨帅学长的帮助下，bug已解决，三大遗留问题：构造函数，析构函数，运算符重载
 */
 
 #include<iostream>
@@ -11,44 +8,50 @@ using namespace std;
 
 class Date{
 	public:
-		Date (int y,int m,int d);
+		Date(int y=0,int m=0,int d=0){
+			year = y;
+			month = m;
+			day = d;
+		};
+		~Date(){};
+		
 		bool isLunerYear(Date a){
 			if(a.year/400 == 0){
-				return 1;
+				return true;
 			}
 			else if(a.year/100 != 0 && a.year/4 == 0){
-				return 1;
+				return true;
 			}
 			else{
-				return 0;
+				return false;
 			}
-		}
+		};
 		bool isBigMonth(Date a){
 			if(a.month <= 7){
 				if(a.month%2 == 1){
-					return 1;
+					return true;
 				}
 				else{
-					return 0;
+					return false;
 				}
 			}
 			else{
 				if(a.month%2 == 0){
-					return 1;
+					return true;
 				}
 				else{
-					return 0;
+					return false;
 				}
 			}
-		}
+		};
 		void nextday(Date a){
 			if(a.month != 2){
-				if(isBigMonth(a) == 1){
+				if(isBigMonth(a) == true){
 					if(a.month == 12 && a.day == 31){	//12月31号后一天是去年一月一号		
 						printf("%d年%d月%d日\n",a.year+1,1,1);
 						return;
 					}
-					else if(a.day >= 1 && a.day <= 0){ //大月2到31号直接向前一天 
+					else if(a.day >= 1 && a.day <= 30){ //大月2到31号直接向前一天 
 						printf("%d年%d月%d日\n",a.year,a.month,a.day+1);
 						return;
 					}
@@ -69,7 +72,7 @@ class Date{
 				}
 			} 
 			else{
-				if(isLunerYear(a) == 1){
+				if(isLunerYear(a) == true){
 					if(a.day == 29){
 						printf("%d年%d月%d日\n",a.year,3,1);
 					}
@@ -82,9 +85,9 @@ class Date{
 					else printf("%d年%d月%d日\n",a.year,a.month,a.day+1);
 				}
 			}
-		}
+		};
 		void preday(Date a){
-				if(isBigMonth(a) == 1){
+				if(isBigMonth(a) == true){
 					if(a.month == 1 && a.day == 1){	//一月一号前一天是去年12月31号			
 						printf("%d年%d月%d日\n",a.year-1,12,31);
 						return;
@@ -116,31 +119,33 @@ class Date{
 						return;
 					}	
 				} 
-		}
+		};
 		void show(Date a){
-			printf("%d年%d月%d日",a.year,a.month,a.day);
-		}
+			printf("%d年%d月%d日\n",a.year,a.month,a.day);
+		};
 		bool equal(Date a,Date b){
 			if(a.year == b.year && a.month == b.month && a.day == b.day){
 				printf("是\n");
-				return 1;
+				return true;
 			}
 			else{
 				printf("不是\n");
-				return 0;
+				return false;
 			}
-		}
+		};
 	private:
 		int year;
 		int month;
 		int day;
-		
 };
 
 int main(){
-	Date today(2018,3,20);
-	Date day(2018,3,20);
+	Date today(2018,3,25);
+	Date day(2018,2,28);
 	day.show(day);
+	day.preday(day); 
+	day.nextday(day); 
+	day.equal(day,today); 
 	
 	return 0;
 }
